@@ -1,0 +1,1 @@
+export const pluralize = (quantity = 0, singular = '', plural = '') => `${quantity} ${quantity === 1? singular : plural}`
