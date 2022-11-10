@@ -1,101 +1,111 @@
 <script>
+  import { SOLID } from '../helpers/enums'
+
+  export let style = SOLID
+  export let disabled = false
+  export let label = ''
+  export let icon = null
+  export const focus = () => {
+    self.focus()
+  }
+
+  let self
 </script>
 
-<div class='item' class:editable>
-  <button class='remove' on:click={remove}><RemoveIcon/></button>
-</div>
+<button class={style} class:icon={icon && !label} disabled={disabled} on:click bind:this={self}>
+  {#if icon}
+    <svelte:component this={icon}></svelte:component>
+  {/if}
+  {#if label}
+    <span>{label}</span>
+  {/if}
+</button>
 
 <style>
-  .item {
-    display: grid;
-    grid-template-columns: 24px 1fr auto;
+  .solid,
+  .color,
+  .grey {
+    font-family: 'Titillium Web', sans-serif;
+    display: flex;
     gap: 12px;
     align-items: center;
-    height: 48px;
-    border-radius: 4px;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    padding: 0 12px;
-  }
-
-  .item.editable {
-    grid-template-columns: 24px 1fr auto 36px;
-    padding: 0 6px 0 12px;
-  }
-
-  .item button {
-    display: flex;
-    align-items: center;
     justify-content: center;
-    margin: 0;
-    padding: 0;
-    background: none;
-    border: none;
-    border-radius: 50%;
+    border: 0;
+    width: fit-content;
+    height: 48px;
+    background-color: transparent;
+    text-transform: uppercase;
+    transition: all 0.4s;
     cursor: pointer;
+    border-radius: 4px;
+    padding: 0 18px;
   }
 
-  .item button:disabled {
+  .solid:disabled,
+  .color:disabled,
+  .grey:disabled {
     pointer-events: none;
     opacity: 0.5;
     filter: saturate(0);
   }
 
-  .item input {
-    appearance: none;
-    border: none;
-    border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
-    width: 48px;
-  }
-
-  .item input:focus {
-    border-bottom: 2px black solid;
+  .solid:focus,
+  .color:focus,
+  .grey:focus {
     outline: none;
   }
 
-  .item input::-webkit-outer-spin-button,
-  .item input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  .solid:focus,
+  .solid:hover {
+    background-color: #1e88e5;
   }
 
-  .item input[type=number] {
-    -moz-appearance: textfield;
+  .color:focus,
+  .grey:focus,
+  .color:hover, 
+  .grey:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
-  .item label {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    color: #999;
-  }
-
-  .remove {
+  .solid :global(svg),
+  .color :global(svg),
+  .grey :global(svg) {
     width: 24px;
     height: 24px;
   }
 
-  .remove :global(svg) {
-    fill: #999;
-    transition: all 0.4s;
+  .solid.icon,
+  .color.icon,
+  .grey.icon {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    gap: 0;
   }
 
-  .remove:hover :global(svg) {
-    fill: #666;
+  .solid {
+    background-color: #2095F2;
+    color: white;
   }
 
-  .submit {
-    width: 36px;
-    height: 36px;
-    transition: all 0.4s;
+  .solid :global(svg) {
+    fill: white;
   }
 
-  .submit:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+  .color {
+    color: #2095F2;
   }
 
-  .submit :global(svg) {
+  .color :global(svg) {
     fill: #2095F2;
   }
 
+  .grey {
+    color: #999;
+  }
+
+  .grey :global(svg) {
+    fill: #999;
+  }
 </style>

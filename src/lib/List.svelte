@@ -1,8 +1,12 @@
 <script>
+  import Button from './Button.svelte';
   import ListItem from './ListItem.svelte'
+  import AddIcon from '../assets/Add.svelte'
+  import { COLOR } from '../helpers/enums';
+  import { tick } from 'svelte';
 
   export let items = []
-  let newItem, currentItem
+  let newItem, currentItem, addButton
  
   const handleAdd = () => {
     newItem = {}
@@ -20,10 +24,14 @@
     if(newItem === e.detail.data) newItem = undefined
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     items = [...items, ...newItem? [newItem] : []]
     currentItem = undefined
-    newItem = undefined
+    if(newItem) {
+      newItem = undefined
+      await tick()
+      addButton.focus()
+    }
   }
 </script>
 
@@ -34,7 +42,7 @@
   {#if newItem}
     <ListItem data={newItem} editable on:remove={handleRemove} on:submit={handleSubmit}/>
   {:else}
-    <button on:click={handleAdd} class='add'>Add batch</button>
+    <Button on:click={handleAdd} style={COLOR} icon={AddIcon} label={'Add batch'} bind:this={addButton}/>
   {/if}
 </div>
 
@@ -44,9 +52,5 @@
     flex-direction: column;
     gap: 6px;
     max-width: 480px;
-  }
-
-  .add {
-    appearance: none;
   }
 </style>

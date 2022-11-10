@@ -1,10 +1,11 @@
 <script>
-  import RemoveIcon from '../assets/Remove.svelte'
   import CheckIcon from '../assets/Check.svelte'
+  import RemoveIcon from '../assets/Remove.svelte'
+  import Button from './Button.svelte'
   import { createEventDispatcher, afterUpdate } from 'svelte'
   import { pluralize } from '../helpers/text';
   import { formatNumber } from '../helpers/numbers';
-  import { CONCENTRATION, REPLICATES } from '../helpers/enums';
+  import { CONCENTRATION, REPLICATES, GREY, COLOR } from '../helpers/enums'
   export let editable = false
   export let data = {}
  
@@ -41,7 +42,7 @@
 </script>
 
 <div class='item' class:editable>
-  <button class='remove' on:click={remove}><RemoveIcon/></button>
+  <Button icon={RemoveIcon} style={GREY} on:click={remove}/>
   {#if editable}
     <label>
       <input type='number' step='1' bind:value={data.replicates} bind:this={replicatesInput}/>
@@ -51,7 +52,7 @@
       <input type='number' bind:value={data.concentration} bind:this={concentrationInput}/>
       copies/ml
     </label>
-    <button class='submit' on:click={submit} disabled={!concentration || !replicates}><CheckIcon/></button>
+    <Button icon={CheckIcon} style={COLOR} on:click={submit} disabled={!concentration || !replicates}/>
   {:else}
     <span data-input={REPLICATES} on:click={edit} on:keydown={edit}>{pluralize(replicates, 'replicate', 'replicates')}</span>
     <span data-input={CONCENTRATION} on:click={edit} on:keydown={edit}>{formatNumber(concentration)} copies/ml</span>
@@ -76,33 +77,16 @@
     padding: 0 6px 0 12px;
   }
 
-  .item button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    background: none;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-
-  .item button:disabled {
-    pointer-events: none;
-    opacity: 0.5;
-    filter: saturate(0);
-  }
-
   .item input {
     appearance: none;
     border: none;
     border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
     width: 72px;
+    transition: all 0.4s;
   }
 
   .item input:focus {
-    border-bottom: 2px black solid;
+    border-bottom: 2px #2095F2 solid;
     outline: none;
   }
 
@@ -122,33 +106,4 @@
     align-items: center;
     color: #999;
   }
-
-  .remove {
-    width: 24px;
-    height: 24px;
-  }
-
-  .remove :global(svg) {
-    fill: #999;
-    transition: all 0.4s;
-  }
-
-  .remove:hover :global(svg) {
-    fill: #666;
-  }
-
-  .submit {
-    width: 36px;
-    height: 36px;
-    transition: all 0.4s;
-  }
-
-  .submit:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  .submit :global(svg) {
-    fill: #2095F2;
-  }
-
 </style>

@@ -1,2 +1,5 @@
 export const REPLICATES = 'replicates'
 export const CONCENTRATION = 'concentration'
+export const SOLID = 'solid'
+export const COLOR = 'color'
+export const GREY = 'grey'

@@ -1,5 +1,7 @@
 export const formatNumber = (value = 0) => {
-  if(countSignificantDigits(value) === countDigits(value)) return value
+  const digits = countDigits(value)
+  const significantDigits = countSignificantDigits(value)
+  if(digits < 4 || significantDigits === digits) return value
   return Number.parseFloat(value).toExponential()
 }
 

@@ -15,13 +15,6 @@
       concentration: 25.4e+2,
     }
   ]
-  //animate
-  //button component
-  //button outline
-  //add
-
-  //only 1 editable
-  //after add focus add button
 </script>
 
 <List {items}/>
