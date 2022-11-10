@@ -14,7 +14,6 @@
   }
 
   const edit= (item) => {
-    console.log(item)
     currentItem = item
     newItem = undefined
   }
